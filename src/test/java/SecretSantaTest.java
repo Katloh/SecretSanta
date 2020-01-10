@@ -58,13 +58,4 @@ public class SecretSantaTest {
         assertNotEquals(listOfNewPairings.get(0).getDonee(), listOfNewPairings.get(0).getGiftee());
         assertNotEquals(listOfNewPairings.get(1).getDonee(), listOfNewPairings.get(1).getGiftee());
     }
-
-
-// 1 - einen Teilnehmer zur Wichtelrunde hinzufügen
-// 2 - jeder Teilnehmer hat einen Namen und eine Mailadresse
-
-
-
-
-
 }
