@@ -64,13 +64,13 @@ public class SecretSantaRoundTest {
 
 
     @Test
-    public void For_Each_Pairing_Donor_And_Giftee_are_not_the_same_Participant(){
+    public void For_Each_Pairing_Donor_And_Giftee_are_not_the_same_Participant() {
         SecretSantaRound secretSantaRound = new SecretSantaRound();
         Participant one = new Participant("Steve", "@steve");
         Participant two = new Participant("Karl", "@Karl");
 
-        secretSantaRound.addParticipantToSecretSantaRound(two);
         secretSantaRound.addParticipantToSecretSantaRound(one);
+        secretSantaRound.addParticipantToSecretSantaRound(two);
 
         ArrayList<Pairing> listOfNewPairings = secretSantaRound.createPairings();
 
@@ -80,4 +80,46 @@ public class SecretSantaRoundTest {
         assertNotEquals(listOfNewPairings.get(1).getDonee(), listOfNewPairings.get(1).getGiftee());
     }
 
+    @Test
+    public void the_result_of_New_Pairing_does_not_equals_the_result_of_the_previous_Pairing() {
+        SecretSantaRound secretSantaRound = new SecretSantaRound();
+
+        Participant participantOne = new Participant("Steve", "foo@bar.com");
+        Participant participantTwo = new Participant("Alice", "foo@bar.com");
+        Participant participantThree = new Participant("Magda", "foo@bar.com");
+
+        ArrayList<Pairing> newSecretSantaRound = new ArrayList<>();
+
+        newSecretSantaRound.add(new Pairing(
+                participantOne, participantTwo)
+        );
+
+        newSecretSantaRound.add(new Pairing(
+                participantTwo, participantThree)
+        );
+
+        newSecretSantaRound.add(new Pairing(
+                participantThree, participantOne)
+        );
+
+        ArrayList<Pairing> previousSecretSantaRound = new ArrayList<>();
+
+        previousSecretSantaRound.add(new Pairing(
+                participantTwo, participantOne)
+        );
+
+        previousSecretSantaRound.add(new Pairing(
+                participantThree, participantTwo)
+        );
+
+        previousSecretSantaRound.add(new Pairing(
+                participantThree, participantOne)
+        );
+
+        assertTrue(secretSantaRound
+                .haveNewPairingsMatchedOldPairings(newSecretSantaRound, newSecretSantaRound));
+
+        assertFalse(secretSantaRound
+                .haveNewPairingsMatchedOldPairings(newSecretSantaRound, previousSecretSantaRound));
+    }
 }
