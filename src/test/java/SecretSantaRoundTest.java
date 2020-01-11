@@ -2,7 +2,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static com.sun.tools.doclint.Entity.times;
 import static org.junit.Assert.*;
 
 public class SecretSantaRoundTest {
@@ -61,6 +60,24 @@ public class SecretSantaRoundTest {
 
         assertNotEquals(listOfNewPairings.get(0).getDonee(), "Karl");
         assertNotEquals(listOfNewPairings.get(1).getDonee(), "Steve");
+    }
+
+
+    @Test
+    public void For_Each_Pairing_Donor_And_Giftee_are_not_the_same_Participant(){
+        SecretSantaRound secretSantaRound = new SecretSantaRound();
+        Participant one = new Participant("Steve", "@steve");
+        Participant two = new Participant("Karl", "@Karl");
+
+        secretSantaRound.addParticipantToSecretSantaRound(two);
+        secretSantaRound.addParticipantToSecretSantaRound(one);
+
+        ArrayList<Pairing> listOfNewPairings = secretSantaRound.createPairings();
+
+        assertEquals(listOfNewPairings.get(0).getDonee(), listOfNewPairings.get(1).getGiftee());
+        assertEquals(listOfNewPairings.get(1).getDonee(), listOfNewPairings.get(0).getGiftee());
+        assertNotEquals(listOfNewPairings.get(0).getDonee(), listOfNewPairings.get(0).getGiftee());
+        assertNotEquals(listOfNewPairings.get(1).getDonee(), listOfNewPairings.get(1).getGiftee());
     }
 
 }
