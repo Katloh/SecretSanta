@@ -49,15 +49,18 @@ public class SecretSantaRoundTest {
         Participant one = new Participant("Steve", "@steve");
         Participant two = new Participant("Karl", "@Karl");
 
-        secretSantaRound.addParticipantToSecretSantaRound(two);
         secretSantaRound.addParticipantToSecretSantaRound(one);
+        secretSantaRound.addParticipantToSecretSantaRound(two);
 
         ArrayList<Pairing> listOfNewPairings = secretSantaRound.createPairings();
 
-        assertEquals(listOfNewPairings.get(0).getDonee(), listOfNewPairings.get(1).getGiftee());
-        assertEquals(listOfNewPairings.get(1).getDonee(), listOfNewPairings.get(0).getGiftee());
-        assertNotEquals(listOfNewPairings.get(0).getDonee(), listOfNewPairings.get(0).getGiftee());
-        assertNotEquals(listOfNewPairings.get(1).getDonee(), listOfNewPairings.get(1).getGiftee());
+        assertEquals(listOfNewPairings.get(0).getDonee().getName(), "Steve");
+        assertEquals(listOfNewPairings.get(1).getDonee().getName(), "Karl");
+        assertEquals(listOfNewPairings.get(0).getGiftee().getName(), "Karl");
+        assertEquals(listOfNewPairings.get(1).getGiftee().getName(), "Steve");
+
+        assertNotEquals(listOfNewPairings.get(0).getDonee(), "Karl");
+        assertNotEquals(listOfNewPairings.get(1).getDonee(), "Steve");
     }
 
 }
