@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class SecretSantaRound {
 
@@ -45,6 +47,22 @@ public class SecretSantaRound {
         }
         return listOfPairings;
     }
+
+    public boolean haveNewPairingsMatchedOldPairings(ArrayList<Pairing> newSecretSantaRound, ArrayList<Pairing> previousSecretSantaRound) {
+
+        List<Boolean> matchList = newSecretSantaRound.stream()
+                .map(newPairing -> previousSecretSantaRound
+                        .stream()
+                        .anyMatch(previousPairing -> previousPairing.equals(newPairing)))
+                .collect(Collectors.toList());
+
+        for (boolean match : matchList) {
+            if (match == true)
+                return true;
+        }
+        return false;
+    }
+
 }
 
 
