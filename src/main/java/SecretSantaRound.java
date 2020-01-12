@@ -1,18 +1,18 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class SecretSantaRound{
+public class SecretSantaRound {
 
     private ArrayList<Participant> listOfParticipants;
     private ArrayList<Pairing> listOfPairings;
     private TestMailService mailService;
+    private String year;
 
-    public SecretSantaRound(TestMailService mailService) {
+    public SecretSantaRound(String year, TestMailService mailService) {
         this.listOfParticipants = new ArrayList<>();
         this.listOfPairings = new ArrayList<>();
         this.mailService = mailService;
+        this.year = year;
     }
 
     public SecretSantaRound() {
@@ -21,15 +21,44 @@ public class SecretSantaRound{
         this.mailService = new TestMailService();
     }
 
+    public void runSecretSantaRound(ArrayList<Participant> participants, ArrayList<Pairing> oldPairings) {
+
+        participants.forEach(participant -> {
+            try {
+                addParticipantToSecretSantaRound(participant);
+            } catch (DuplicateParticipantException e) {
+                e.printStackTrace();
+            }
+        });
+        shuffle();
+        do{
+            createPairings();
+        } while(haveNewPairingsMatchedOldPairings(listOfPairings, oldPairings));
+        sendMailToDonors(listOfPairings);
+    }
+
     public ArrayList<Participant> getListOfParticipants() {
         return listOfParticipants;
     }
 
-    public void addParticipantToSecretSantaRound(Participant participant) {
-        listOfParticipants.add(participant);
+    public void addParticipantToSecretSantaRound(Participant newParticipant) throws DuplicateParticipantException {
+
+        boolean noMatch = listOfParticipants
+                    .stream()
+                    .filter(participant ->
+                            participant.getName().equals(newParticipant.getName()) &&
+                                    participant.getEmailAdress().equals(newParticipant.getEmailAdress()))
+                    .count() == 0;
+
+        if(noMatch == true) {
+            listOfParticipants.add(newParticipant);
+        } else {
+            throw new DuplicateParticipantException("Der Teilnehmer " + newParticipant.getName() + "steht mehrmals in der List");
+        }
     }
 
-    public boolean GivenParticipantIsPartOfTheSecretSantaRound(Participant one) {
+
+    public boolean givenParticipantIsPartOfTheSecretSantaRound(Participant one) {
         return listOfParticipants
                 .stream()
                 .filter(Participant -> Participant.getName().equals(one.getName()) &&
@@ -56,10 +85,10 @@ public class SecretSantaRound{
         return listOfPairings;
     }
 
-    public boolean haveNewPairingsMatchedOldPairings(ArrayList<Pairing> newSecretSantaRound, ArrayList<Pairing> previousSecretSantaRound) {
+    public boolean haveNewPairingsMatchedOldPairings(ArrayList<Pairing> newPairings, ArrayList<Pairing> oldPairings) {
 
-        List<Boolean> matchList = newSecretSantaRound.stream()
-                .map(newPairing -> previousSecretSantaRound
+        List<Boolean> matchList = newPairings.stream()
+                .map(newPairing -> oldPairings
                         .stream()
                         .anyMatch(previousPairing -> previousPairing.equals(newPairing)))
                 .collect(Collectors.toList());
@@ -74,9 +103,10 @@ public class SecretSantaRound{
     public void sendMailToDonors(List<Pairing> pairings) {
 
         pairings.forEach(pairing -> {
-            mailService.sendMail(pairing);
+            mailService.sendMail(pairing, year);
         });
     }
+
 }
 
 

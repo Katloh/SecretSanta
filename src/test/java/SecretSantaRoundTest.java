@@ -1,8 +1,5 @@
 import org.junit.Test;
 
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -13,7 +10,7 @@ public class SecretSantaRoundTest {
 
 
     @Test
-    public void One_Participant_Can_Be_Added_To_The_SecretSantaRound() {
+    public void One_Participant_Can_Be_Added_To_The_SecretSantaRound() throws DuplicateParticipantException {
         SecretSantaRound secretSantaRound = new SecretSantaRound();
         secretSantaRound.addParticipantToSecretSantaRound(new Participant("Steve", "@mail.com"));
         assertEquals(secretSantaRound.getListOfParticipants().get(0).getName(), "Steve");
@@ -21,7 +18,7 @@ public class SecretSantaRoundTest {
     }
 
     @Test
-    public void several_Participants_Can_Be_Added_To_One_SecretSantaRound() {
+    public void several_Participants_Can_Be_Added_To_One_SecretSantaRound() throws DuplicateParticipantException {
         SecretSantaRound secretSantaRound = new SecretSantaRound();
         Participant one = new Participant("Steve", "@steve");
         Participant two = new Participant("Karl", "@Karl");
@@ -30,13 +27,13 @@ public class SecretSantaRoundTest {
         secretSantaRound.addParticipantToSecretSantaRound(two);
         secretSantaRound.addParticipantToSecretSantaRound(one);
 
-        assertTrue(secretSantaRound.GivenParticipantIsPartOfTheSecretSantaRound(two));
-        assertTrue(secretSantaRound.GivenParticipantIsPartOfTheSecretSantaRound(one));
-        assertFalse(secretSantaRound.GivenParticipantIsPartOfTheSecretSantaRound(three));
+        assertTrue(secretSantaRound.givenParticipantIsPartOfTheSecretSantaRound(two));
+        assertTrue(secretSantaRound.givenParticipantIsPartOfTheSecretSantaRound(one));
+        assertFalse(secretSantaRound.givenParticipantIsPartOfTheSecretSantaRound(three));
     }
 
     @Test
-    public void Participants_Of_One_SecretSantaRound_CanBeShuffled() {
+    public void Participants_Of_One_SecretSantaRound_CanBeShuffled() throws DuplicateParticipantException {
         SecretSantaRound secretSantaRound = new SecretSantaRound();
         Participant one = new Participant("Steve", "@steve");
         Participant two = new Participant("Karl", "@Karl");
@@ -48,7 +45,7 @@ public class SecretSantaRoundTest {
     }
 
     @Test
-    public void Participants_Can_Be_Paired_And_The_Pairing_Can_Be_Added_To_A_PairingList() {
+    public void Participants_Can_Be_Paired_And_The_Pairing_Can_Be_Added_To_A_PairingList() throws DuplicateParticipantException {
         SecretSantaRound secretSantaRound = new SecretSantaRound();
         Participant one = new Participant("Steve", "@steve");
         Participant two = new Participant("Karl", "@Karl");
@@ -69,7 +66,7 @@ public class SecretSantaRoundTest {
 
 
     @Test
-    public void For_Each_Pairing_Donor_And_Giftee_are_not_the_same_Participant() {
+    public void For_Each_Pairing_Donor_And_Giftee_are_not_the_same_Participant() throws DuplicateParticipantException {
         SecretSantaRound secretSantaRound = new SecretSantaRound();
         Participant one = new Participant("Steve", "@steve");
         Participant two = new Participant("Karl", "@Karl");

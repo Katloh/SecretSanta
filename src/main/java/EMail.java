@@ -3,13 +3,15 @@ public class EMail {
     private String eMailadress;
     private String donorName;
     private String gifteeName;
+    private String subjectText;
     private String eMailText;
 
 
-    public EMail(String eMailadress, String donorName, String gifteeName) {
+    public EMail(String eMailadress, String donorName, String gifteeName, String year) {
         this.eMailadress = eMailadress;
         this.donorName = donorName;
         this.gifteeName = gifteeName;
+        subjectText = setSubjectText(donorName, year);
         eMailText = seteMailText(donorName, gifteeName);
     }
 
@@ -29,8 +31,12 @@ public class EMail {
         return eMailText;
     }
 
-    public String getSubjectText(String donorName) {
-        String subjectText = "Hallo " + donorName + " - deine Wichtel-Los-Ziehung für Weihnachten 2020";
+    private String setSubjectText(String donorName, String year) {
+        String subjectText = "Hallo " + donorName + " - deine Wichtel-Los-Ziehung für Weihnachten " + year;
+        return subjectText;
+    }
+
+    public String getSubjectText() {
         return subjectText;
     }
 

@@ -4,7 +4,6 @@ import java.util.Properties;
 
 public class RealMailService {
 
-
     public void sendMail(String userName, String password, String senderEmailAddress, String msg, String subject) {
 
         String recipiantEmailAddress = null;

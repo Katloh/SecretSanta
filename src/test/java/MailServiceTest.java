@@ -10,7 +10,7 @@ public class MailServiceTest {
     @Test
     public void SecretSantaRound_can_be_configured_with_a_mailservice() {
         TestMailService testMailService = new TestMailService();
-        SecretSantaRound secretSantaRound = new SecretSantaRound(testMailService);
+        SecretSantaRound secretSantaRound = new SecretSantaRound("2020", testMailService);
 
         List<Pairing> pairings = new ArrayList<>();
         pairings.add(new Pairing(
@@ -24,7 +24,7 @@ public class MailServiceTest {
     @Test
     public void An_Email_is_send_to_the_correct_Mailaddress() {
         TestMailService testMailService = new TestMailService();
-        SecretSantaRound secretSantaRound = new SecretSantaRound(testMailService);
+        SecretSantaRound secretSantaRound = new SecretSantaRound("2020",testMailService);
         List<Pairing> pairings = new ArrayList<>();
         pairings.add(new Pairing(
                 new Participant("Steve", "@steve"), new Participant("Karl", "@karl")));
@@ -37,7 +37,7 @@ public class MailServiceTest {
     @Test
     public void Multiple_emails_are_send_for_each_donor() {
         TestMailService testMailService = new TestMailService();
-        SecretSantaRound secretSantaRound = new SecretSantaRound(testMailService);
+        SecretSantaRound secretSantaRound = new SecretSantaRound("2020",testMailService);
         List<Pairing> pairings = new ArrayList<>();
         pairings.add(
                 new Pairing(new Participant("Steve", "@steve"),
@@ -67,11 +67,12 @@ public class MailServiceTest {
         pairings.add(new Pairing(
                 new Participant("Karl", "@karl"), new Participant("Steve", "@steve")));
 
-        testMailService.createNewEMail(pairings.get(0));
+        testMailService.createNewEMail(pairings.get(0),"2020");
         assertTrue(testMailService.getSentEmails().stream().anyMatch(eMail -> eMail.getGifteeName().equals("Karl") && eMail.getDonorName().equals("Steve")));
         assertFalse(testMailService.getSentEmails().stream().anyMatch(eMail -> eMail.getGifteeName().equals("Steve") && eMail.getDonorName().equals("Karl")));
 
-        testMailService.createNewEMail(pairings.get(1));
+        testMailService.createNewEMail(pairings.get(1),"2020");
         assertTrue(testMailService.getSentEmails().stream().anyMatch(eMail -> eMail.getGifteeName().equals("Steve") && eMail.getDonorName().equals("Karl")));
     }
+
 }

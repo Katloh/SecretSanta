@@ -15,7 +15,6 @@ public class SecretSantaRoundLogger {
                 IOException e) {
             System.out.println(e.getMessage());
         }
-
     }
 
     private String reduceToString(String currentString, String accumulator) {

@@ -1,8 +1,3 @@
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.Session;
-import javax.mail.internet.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,14 +5,13 @@ public class TestMailService {
 
     List<EMail> sentEMails = new ArrayList<>();
 
-    public void sendMail(Pairing pairing) {
-        createNewEMail(pairing);
+    public void sendMail(Pairing pairing, String year) {
+        createNewEMail(pairing, year);
     }
 
-    public EMail createNewEMail(Pairing pairing) {
-        EMail eMail = new EMail(pairing.getDonee().getEmailAdress(), pairing.getDonee().getName(), pairing.getGiftee().getName());
+    public EMail createNewEMail(Pairing pairing, String year) {
+        EMail eMail = new EMail(pairing.getDonee().getEmailAdress(), pairing.getDonee().getName(), pairing.getGiftee().getName(), year);
         sentEMails.add(eMail);
-        System.out.println(eMail.geteMailText());
         return eMail;
     }
 
