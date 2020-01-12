@@ -3,10 +3,17 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SecretSantaRound {
+public class SecretSantaRound{
 
     private ArrayList<Participant> listOfParticipants;
     private ArrayList<Pairing> listOfPairings;
+    private TestMailService mailService;
+
+    public SecretSantaRound(TestMailService mailService) {
+        this.listOfParticipants = new ArrayList<>();
+        this.listOfPairings = new ArrayList<>();
+        this.mailService = mailService;
+    }
 
     public SecretSantaRound() {
         this.listOfParticipants = new ArrayList<>();
@@ -63,6 +70,12 @@ public class SecretSantaRound {
         return false;
     }
 
+    public void sendMailToDonors(List<Pairing> pairings) {
+
+        pairings.forEach(pairing -> {
+            mailService.sendMail(pairing);
+        });
+    }
 }
 
 

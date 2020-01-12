@@ -1,8 +1,13 @@
 import org.junit.Test;
 
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class SecretSantaRoundTest {
 
