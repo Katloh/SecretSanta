@@ -1,3 +1,9 @@
+package com.kaloh.secretsanta.eMail;
+
+import com.kaloh.secretsanta.domain.EMail;
+import com.kaloh.secretsanta.domain.Pairing;
+import com.kaloh.secretsanta.domain.Participant;
+import com.kaloh.secretsanta.domain.SecretSantaRound;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -6,33 +12,6 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class MailServiceTest {
-
-    @Test
-    public void SecretSantaRound_can_be_configured_with_a_mailservice() {
-        TestMailService testMailService = new TestMailService();
-        SecretSantaRound secretSantaRound = new SecretSantaRound("2020", testMailService);
-
-        List<Pairing> pairings = new ArrayList<>();
-        pairings.add(new Pairing(
-                new Participant("Steve", "@steve"), new Participant("Karl", "@steve")));
-
-        secretSantaRound.sendMailToDonors(pairings);
-        assertEquals(testMailService.getNumberOfSentEMails(), 1);
-
-    }
-
-    @Test
-    public void An_Email_is_send_to_the_correct_Mailaddress() {
-        TestMailService testMailService = new TestMailService();
-        SecretSantaRound secretSantaRound = new SecretSantaRound("2020",testMailService);
-        List<Pairing> pairings = new ArrayList<>();
-        pairings.add(new Pairing(
-                new Participant("Steve", "@steve"), new Participant("Karl", "@karl")));
-
-        secretSantaRound.sendMailToDonors(pairings);
-
-        assertTrue(testMailService.sentEMails.get(testMailService.getSentEmails().size()-1).geteMailadress().equals("@steve"));
-    }
 
     @Test
     public void Multiple_emails_are_send_for_each_donor() {

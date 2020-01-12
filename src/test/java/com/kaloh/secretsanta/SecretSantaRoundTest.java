@@ -1,6 +1,14 @@
+package com.kaloh.secretsanta;
+
+import com.kaloh.secretsanta.domain.Pairing;
+import com.kaloh.secretsanta.domain.Participant;
+import com.kaloh.secretsanta.domain.SecretSantaRound;
+import com.kaloh.secretsanta.exception.DuplicateParticipantException;
+import com.kaloh.secretsanta.eMail.TestMailService;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
@@ -123,5 +131,19 @@ public class SecretSantaRoundTest {
 
         assertFalse(secretSantaRound
                 .haveNewPairingsMatchedOldPairings(newSecretSantaRound, previousSecretSantaRound));
+    }
+
+    @Test
+    public void SecretSantaRound_can_be_configured_with_a_mailservice() {
+        TestMailService testMailService = new TestMailService();
+        SecretSantaRound secretSantaRound = new SecretSantaRound("2020", testMailService);
+
+        List<Pairing> pairings = new ArrayList<>();
+        pairings.add(new Pairing(
+                new Participant("Steve", "@steve"), new Participant("Karl", "@steve")));
+
+        secretSantaRound.sendMailToDonors(pairings);
+        assertEquals(testMailService.getNumberOfSentEMails(), 1);
+
     }
 }

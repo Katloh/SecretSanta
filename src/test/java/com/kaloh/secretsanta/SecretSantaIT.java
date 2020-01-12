@@ -1,3 +1,10 @@
+package com.kaloh.secretsanta;
+
+import com.kaloh.secretsanta.domain.Pairing;
+import com.kaloh.secretsanta.domain.Participant;
+import com.kaloh.secretsanta.domain.SecretSantaRound;
+import com.kaloh.secretsanta.exception.DuplicateParticipantException;
+import com.kaloh.secretsanta.eMail.TestMailService;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -52,4 +59,5 @@ public class SecretSantaIT {
         secretSantaRound.runSecretSantaRound(participants, oldPairings);
         assertTrue(testMailService.getSentEmails().size() == 3);
     }
+
 }

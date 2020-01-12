@@ -1,3 +1,7 @@
+package com.kaloh.secretsanta.domain;
+
+import com.kaloh.secretsanta.domain.Pairing;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;

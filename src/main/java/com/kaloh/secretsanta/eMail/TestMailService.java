@@ -1,3 +1,8 @@
+package com.kaloh.secretsanta.eMail;
+
+import com.kaloh.secretsanta.domain.EMail;
+import com.kaloh.secretsanta.domain.Pairing;
+
 import java.util.ArrayList;
 import java.util.List;
 

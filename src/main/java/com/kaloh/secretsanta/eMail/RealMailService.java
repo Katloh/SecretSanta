@@ -1,3 +1,5 @@
+package com.kaloh.secretsanta.eMail;
+
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.util.Properties;

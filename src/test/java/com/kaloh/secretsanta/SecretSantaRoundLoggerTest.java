@@ -1,3 +1,8 @@
+package com.kaloh.secretsanta;
+
+import com.kaloh.secretsanta.domain.Pairing;
+import com.kaloh.secretsanta.domain.Participant;
+import com.kaloh.secretsanta.domain.SecretSantaRoundLogger;
 import org.junit.Test;
 
 import java.io.BufferedWriter;

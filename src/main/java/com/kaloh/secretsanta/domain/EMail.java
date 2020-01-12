@@ -1,3 +1,5 @@
+package com.kaloh.secretsanta.domain;
+
 public class EMail {
 
     private String eMailadress;

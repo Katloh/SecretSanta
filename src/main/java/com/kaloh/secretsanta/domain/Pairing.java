@@ -1,3 +1,5 @@
+package com.kaloh.secretsanta.domain;
+
 public class Pairing {
 
     private Participant donee;
