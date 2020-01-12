@@ -17,6 +17,7 @@ public class TestMailService {
     public EMail createNewEMail(Pairing pairing) {
         EMail eMail = new EMail(pairing.getDonee().getEmailAdress(), pairing.getDonee().getName(), pairing.getGiftee().getName());
         sentEMails.add(eMail);
+        System.out.println(eMail.geteMailText());
         return eMail;
     }
 

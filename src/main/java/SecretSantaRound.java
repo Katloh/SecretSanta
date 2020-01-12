@@ -18,6 +18,7 @@ public class SecretSantaRound{
     public SecretSantaRound() {
         this.listOfParticipants = new ArrayList<>();
         this.listOfPairings = new ArrayList<>();
+        this.mailService = new TestMailService();
     }
 
     public ArrayList<Participant> getListOfParticipants() {

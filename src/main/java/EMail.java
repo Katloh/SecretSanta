@@ -10,48 +10,35 @@ public class EMail {
         this.eMailadress = eMailadress;
         this.donorName = donorName;
         this.gifteeName = gifteeName;
-        eMailText = geteMailText(eMailadress, donorName, gifteeName);
+        eMailText = seteMailText(donorName, gifteeName);
     }
 
     public String geteMailadress() {
         return eMailadress;
     }
 
-    public void seteMailadress(String eMailadress) {
-        this.eMailadress = eMailadress;
-    }
-
     public String getDonorName() {
         return donorName;
-    }
-
-    public void setDonorName(String donorName) {
-        this.donorName = donorName;
     }
 
     public String getGifteeName() {
         return gifteeName;
     }
 
-    public void setGifteeName(String gifteeName) {
-        this.gifteeName = gifteeName;
+    public String geteMailText() {
+        return eMailText;
     }
 
-    public void seteMailText(String eMailText) {
-        this.eMailText = eMailText;
-    }
-
-    public String getSubjectText(String donorName){
-        String subjectText = "Hallo " + donorName + " - deine Wichtel-Los-Ziehung für Weihnachten 2019";
+    public String getSubjectText(String donorName) {
+        String subjectText = "Hallo " + donorName + " - deine Wichtel-Los-Ziehung für Weihnachten 2020";
         return subjectText;
     }
 
-    public String geteMailText(String eMailadress, String donorName, String gifteeName){
+    private String seteMailText(String donorName, String gifteeName) {
 
-        String eMailText = "Hallo " + donorName + ",<br/><br/>"
+        eMailText = "Hallo " + donorName + ",<br/><br/>"
                 + " Der digitale automatische Wichtel-Algorithmus hat gelost.<br/><br/> " +
                 "Du darfst zu Weihnachten folgende Person beschenken: " + gifteeName;
-
         return eMailText;
     }
 }
