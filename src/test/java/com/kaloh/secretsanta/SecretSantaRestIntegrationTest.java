@@ -30,7 +30,7 @@ public class SecretSantaRestIntegrationTest {
     }
 
     @Test
-    public void test() {
+    public void status_is_200_for_a_successful_post() {
 
         ArrayList<ParticipantDto> participants = new ArrayList<>();
         participants.add(new ParticipantDto("katja", "@foo"));
