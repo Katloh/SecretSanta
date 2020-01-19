@@ -56,7 +56,7 @@ public class SecretSantaIT {
         oldPairings.add(new Pairing(participantThree, participantOne));
 
         SecretSantaRound secretSantaRound = new SecretSantaRound("2020", testMailService);
-        secretSantaRound.runSecretSantaRound(participants, oldPairings);
+        secretSantaRound.runSecretSantaRound(participants);
         assertTrue(testMailService.getSentEmails().size() == 3);
     }
 

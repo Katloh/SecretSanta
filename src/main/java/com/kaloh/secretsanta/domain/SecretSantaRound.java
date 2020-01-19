@@ -26,7 +26,9 @@ public class SecretSantaRound {
         this.mailService = new TestMailService();
     }
 
-    public void runSecretSantaRound(ArrayList<Participant> participants, ArrayList<Pairing> oldPairings) {
+    public void runSecretSantaRound(List<Participant> participants) {
+
+        ArrayList<Pairing> oldPairings = new ArrayList<>();
 
         participants.forEach(participant -> {
             try {

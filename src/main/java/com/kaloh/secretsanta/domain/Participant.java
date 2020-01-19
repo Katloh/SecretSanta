@@ -1,5 +1,8 @@
 package com.kaloh.secretsanta.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.kaloh.secretsanta.dto.ParticipantDto;
+
 public class Participant {
 
     private String name;
@@ -8,24 +11,19 @@ public class Participant {
     public Participant(String name, String emailAdress) {
         this.name = name;
         this.emailAdress = emailAdress;
+    }
 
+    public Participant(ParticipantDto participantDto){
+        this.name = participantDto.getName();
+        this.emailAdress = participantDto.geteMailAddress();
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getEmailAdress() {
         return emailAdress;
     }
-
-    public void setEmailAdress(String emailAdress) {
-        this.emailAdress = emailAdress;
-    }
-
 
 }
