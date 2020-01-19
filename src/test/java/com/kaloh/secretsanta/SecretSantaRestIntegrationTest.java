@@ -1,6 +1,7 @@
 package com.kaloh.secretsanta;
 
 import com.kaloh.secretsanta.dto.ParticipantDto;
+import com.kaloh.secretsanta.dto.SecretSantaRoundRequest;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,18 +34,15 @@ public class SecretSantaRestIntegrationTest {
 
         ArrayList<ParticipantDto> participants = new ArrayList<>();
         participants.add(new ParticipantDto("katja", "@foo"));
+        participants.add(new ParticipantDto("gergor", "@frefor"));
+
+        SecretSantaRoundRequest secretSantaRoundRequest = new SecretSantaRoundRequest("2020", participants);
 
         given()
-                .body(participants)
+                .contentType("application/json")
+                .body(secretSantaRoundRequest)
                 .when()
-                .post("/secretSanta")
-                .then()
-                .assertThat()
-                .body("participant.name", equalTo("katja"));
-
+                .post("/secretSanta", secretSantaRoundRequest)
+                .then().assertThat().statusCode(200);
     }
-
-
-
-
 }
