@@ -1,6 +1,5 @@
 package com.kaloh.secretsanta.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kaloh.secretsanta.dto.ParticipantDto;
 import lombok.EqualsAndHashCode;
 

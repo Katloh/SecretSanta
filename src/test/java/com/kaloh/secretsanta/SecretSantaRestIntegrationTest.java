@@ -1,7 +1,6 @@
 package com.kaloh.secretsanta;
 
 import com.kaloh.secretsanta.domain.Pairing;
-import com.kaloh.secretsanta.domain.Participant;
 import com.kaloh.secretsanta.dto.ParticipantDto;
 import com.kaloh.secretsanta.dto.SecretSantaRoundRequest;
 import com.kaloh.secretsanta.eMail.TestMailService;
@@ -12,8 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
-import org.mockito.Mock;
-import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;

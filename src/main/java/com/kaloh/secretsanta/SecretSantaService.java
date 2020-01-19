@@ -1,6 +1,5 @@
 package com.kaloh.secretsanta;
 
-import com.kaloh.secretsanta.domain.EMail;
 import com.kaloh.secretsanta.domain.Participant;
 import com.kaloh.secretsanta.domain.SecretSantaRound;
 import com.kaloh.secretsanta.dto.SecretSantaRoundRequest;
