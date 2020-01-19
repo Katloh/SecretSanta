@@ -1,5 +1,8 @@
 package com.kaloh.secretsanta.dto;
 
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode
 public class ParticipantDto {
 
     private String name;

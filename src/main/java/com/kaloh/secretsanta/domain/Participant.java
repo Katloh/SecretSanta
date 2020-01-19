@@ -2,7 +2,9 @@ package com.kaloh.secretsanta.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kaloh.secretsanta.dto.ParticipantDto;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode
 public class Participant {
 
     private String name;

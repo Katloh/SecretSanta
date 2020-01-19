@@ -5,6 +5,7 @@ import com.kaloh.secretsanta.domain.Participant;
 import com.kaloh.secretsanta.domain.SecretSantaRound;
 import com.kaloh.secretsanta.dto.SecretSantaRoundRequest;
 import com.kaloh.secretsanta.eMail.TestMailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,9 +15,16 @@ import java.util.stream.Collectors;
 @Service
 public class SecretSantaService {
 
-    public ArrayList<String> startRound(SecretSantaRoundRequest request) {
+    private TestMailService testMailService;
+    private SecretSantaRound secretSantaRound;
 
-        TestMailService testMailService = new TestMailService();
+    @Autowired
+    public SecretSantaService(TestMailService testMailService){
+        this.testMailService = testMailService;
+
+    }
+
+    public ArrayList<String> startRound(SecretSantaRoundRequest request) {
 
         SecretSantaRound secretSantaRound = new SecretSantaRound(request.getYear(), testMailService);
 
@@ -28,8 +36,6 @@ public class SecretSantaService {
 
         testMailService.getSentEmails().forEach(eMail ->
                 System.out.println(eMail.getDonorName()));
-
-
 
         testMailService.getSentEmails().forEach(eMail ->
                 donorNames.add(eMail.getDonorName()));

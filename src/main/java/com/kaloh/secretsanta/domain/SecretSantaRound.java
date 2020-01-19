@@ -2,6 +2,7 @@ package com.kaloh.secretsanta.domain;
 
 import com.kaloh.secretsanta.exception.DuplicateParticipantException;
 import com.kaloh.secretsanta.eMail.TestMailService;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;

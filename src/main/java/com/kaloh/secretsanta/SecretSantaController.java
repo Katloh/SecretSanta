@@ -10,10 +10,15 @@ import org.springframework.http.ResponseEntity;
 @RestController
 public class SecretSantaController {
 
+    private SecretSantaService secretSantaService;
+
+    public SecretSantaController(SecretSantaService secretSantaService) {
+        this.secretSantaService = secretSantaService;
+    }
+
     @RequestMapping(value = "/secretSanta",
                 method = RequestMethod.POST)
     public void createSecretSantaRound(@RequestBody SecretSantaRoundRequest entry) {
-        SecretSantaService secretSantaService = new SecretSantaService();
         secretSantaService.startRound(entry);
     }
 

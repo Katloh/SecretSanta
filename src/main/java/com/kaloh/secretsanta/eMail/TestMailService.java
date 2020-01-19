@@ -2,10 +2,14 @@ package com.kaloh.secretsanta.eMail;
 
 import com.kaloh.secretsanta.domain.EMail;
 import com.kaloh.secretsanta.domain.Pairing;
+import lombok.EqualsAndHashCode;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@EqualsAndHashCode
+@Service
 public class TestMailService {
 
     List<EMail> sentEMails = new ArrayList<>();

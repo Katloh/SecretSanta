@@ -25,4 +25,6 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     testCompile group: 'io.rest-assured', name: 'spring-mock-mvc', version: '3.0.0'
+    compile group:'org.projectlombok', name: 'lombok', version: '1.18.10'
+    testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
 }

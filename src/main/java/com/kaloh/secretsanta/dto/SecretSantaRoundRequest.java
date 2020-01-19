@@ -1,8 +1,10 @@
 package com.kaloh.secretsanta.dto;
 
 
-import java.util.ArrayList;
+import lombok.EqualsAndHashCode;
 
+import java.util.ArrayList;
+@EqualsAndHashCode
 public class SecretSantaRoundRequest {
 
     private String year;
