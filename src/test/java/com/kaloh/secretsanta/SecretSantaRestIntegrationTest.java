@@ -45,6 +45,9 @@ public class SecretSantaRestIntegrationTest {
     @Captor
     private ArgumentCaptor<Pairing> pairingCaptor = ArgumentCaptor.forClass(Pairing.class);
 
+    @Captor
+    private ArgumentCaptor<String> yearCaptor = ArgumentCaptor.forClass(String.class);
+
     @Test
     public void status_is_200_for_a_successful_post() {
         //given a SecretSantaRoundRequest
@@ -82,15 +85,20 @@ public class SecretSantaRestIntegrationTest {
                 .post("/secretSanta", secretSantaRoundRequest);
 
 
-        verify(testMailService, times(2)).sendMail(pairingCaptor.capture(), anyString());
+        verify(testMailService, times(2)).sendMail(pairingCaptor.capture(), yearCaptor.capture());
         List<Pairing> capturedPairings = pairingCaptor.getAllValues();
+        List<String> capturedYears = yearCaptor.getAllValues();
 
-        assertTrue((isDonorInList("gergor", capturedPairings)));
-        assertTrue((isDonorInList("katja", capturedPairings)));
+        assertTrue(isDonorInList("gergor", capturedPairings));
+        assertTrue(isDonorInList("katja", capturedPairings));
+
+        assertTrue(capturedYears.stream().allMatch(year -> year.equals("2020")));
     }
 
     private boolean isDonorInList(String string, List<Pairing> pairings){
         boolean match = false;
         return match = pairings.stream().filter(pairing -> pairing.getDonor().getName().equals(string)).count() == 1;
     }
+
+
 }

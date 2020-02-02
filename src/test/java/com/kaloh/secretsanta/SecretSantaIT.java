@@ -15,19 +15,6 @@ import static org.junit.Assert.assertTrue;
 
 public class SecretSantaIT {
 
-    @Test
-    public void a_SecretSantaRound_can_be_created_with_given_Year() {
-        //given a Testmailservice and a SecretSantaRound
-        TestMailService testMailService = new TestMailService();
-        List<Pairing> pairings = new ArrayList<>();
-        pairings.add(new Pairing(
-                new Participant("Steve", "@steve"), new Participant("Karl", "@steve")));
-
-        SecretSantaRound secretSantaRound = new SecretSantaRound("2020", testMailService);
-        secretSantaRound.sendMailToDonors(pairings);
-        assertTrue(testMailService.getSentEmails().get(0).getSubjectText().contains("2020"));
-    }
-
     @Test(expected = DuplicateParticipantException.class)
     public void throws_exception_if_participant_is_added_twice() throws Exception {
         //given a Testmailservice and a SecretSantaRound

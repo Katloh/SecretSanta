@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 public class MailServiceTest {
 
     @Test
-    public void Multiple_emails_are_send_for_each_donor() {
+    public void one_email_can_be_send_to_one_donor() {
         TestMailService testMailService = new TestMailService();
         SecretSantaRound secretSantaRound = new SecretSantaRound("2020",testMailService);
         List<Pairing> pairings = new ArrayList<>();
@@ -22,18 +22,13 @@ public class MailServiceTest {
                 new Pairing(new Participant("Steve", "@steve"),
                         new Participant("Karl", "@karl"))
         );
-        pairings.add(
-                new Pairing(new Participant("Alice", "@alice"),
-                        new Participant("Bob", "@Bob"))
-        );
 
-        secretSantaRound.sendMailToDonors(pairings);
+        testMailService.sendMail(pairings.get(0), "2020");
 
         List<EMail> sentMails = testMailService.getSentEmails();
 
-        assertEquals(testMailService.getNumberOfSentEMails(), 2);
+        assertEquals(testMailService.getNumberOfSentEMails(), 1);
         assert(sentMails.stream().anyMatch(eMail -> eMail.getDonorName().equals("Steve")));
-        assert(sentMails.stream().anyMatch(eMail -> eMail.getDonorName().equals("Alice")));
     }
 
     @Test
