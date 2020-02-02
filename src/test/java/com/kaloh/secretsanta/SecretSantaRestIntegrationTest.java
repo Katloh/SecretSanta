@@ -8,6 +8,7 @@ import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import lombok.EqualsAndHashCode;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -33,6 +34,8 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @EqualsAndHashCode
 public class SecretSantaRestIntegrationTest {
 
+    ArrayList<ParticipantDto> participants;
+
     @Autowired
     private WebApplicationContext webApplicationContext;
 
@@ -40,8 +43,14 @@ public class SecretSantaRestIntegrationTest {
     private TestMailService testMailService;
 
     @Before
-    public void initialiseRestAssuredMockMvcWebApplicationContext() {
+    public void setup() {
         RestAssuredMockMvc.webAppContextSetup(webApplicationContext);
+
+        ParticipantDto participantOne = new ParticipantDto("katja", "@foo");
+        ParticipantDto participantTwo = new ParticipantDto("gergor", "@frefor");
+
+        participants.add(participantOne);
+        participants.add(participantTwo);
     }
 
     @Captor
@@ -52,10 +61,6 @@ public class SecretSantaRestIntegrationTest {
 
     @Test
     public void status_is_200_for_a_post_with_two_participants() {
-        ArrayList<ParticipantDto> participants = new ArrayList<>();
-        participants.add(new ParticipantDto("katja", "@foo"));
-        participants.add(new ParticipantDto("gergor", "@frefor"));
-
         SecretSantaRoundRequest secretSantaRoundRequest = new SecretSantaRoundRequest("2020", participants);
 
         given()
@@ -68,22 +73,12 @@ public class SecretSantaRestIntegrationTest {
 
     @Test
     public void posting_two_participants_will_send_out_two_eMails_to_both_donors() {
-        ArrayList<ParticipantDto> participants = new ArrayList<>();
-
-        ParticipantDto participantOne = new ParticipantDto("katja", "@foo");
-        ParticipantDto participantTwo = new ParticipantDto("gergor", "@frefor");
-
-        participants.add(participantOne);
-        participants.add(participantTwo);
-
         SecretSantaRoundRequest secretSantaRoundRequest = new SecretSantaRoundRequest("2020", participants);
-
         given()
                 .contentType("application/json")
                 .body(secretSantaRoundRequest)
                 .when()
                 .post("/secretSanta", secretSantaRoundRequest);
-
 
         verify(testMailService, times(2)).sendMail(pairingCaptor.capture(), anyString());
         List<Pairing> capturedPairings = pairingCaptor.getAllValues();
@@ -94,22 +89,12 @@ public class SecretSantaRestIntegrationTest {
 
     @Test
     public void posting_a_year_will_create_eMails_with_correct_year_in_the_subject() {
-        ArrayList<ParticipantDto> participants = new ArrayList<>();
-
-        ParticipantDto participantOne = new ParticipantDto("katja", "@foo");
-        ParticipantDto participantTwo = new ParticipantDto("gergor", "@frefor");
-
-        participants.add(participantOne);
-        participants.add(participantTwo);
-
         SecretSantaRoundRequest secretSantaRoundRequest = new SecretSantaRoundRequest("2020", participants);
-
         given()
                 .contentType("application/json")
                 .body(secretSantaRoundRequest)
                 .when()
                 .post("/secretSanta", secretSantaRoundRequest);
-
 
         verify(testMailService, times(2)).sendMail(any(), yearCaptor.capture());
         List<String> capturedYears = yearCaptor.getAllValues();
@@ -121,6 +106,4 @@ public class SecretSantaRestIntegrationTest {
         boolean match = false;
         return match = pairings.stream().filter(pairing -> pairing.getDonor().getName().equals(string)).count() == 1;
     }
-
-
 }
