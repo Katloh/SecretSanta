@@ -1,6 +1,7 @@
 package com.kaloh.secretsanta;
 
 import com.kaloh.secretsanta.dto.SecretSantaRoundRequest;
+import com.kaloh.secretsanta.dto.SecretSantaRoundResponse;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,8 +19,8 @@ public class SecretSantaController {
 
     @RequestMapping(value = "/secretSanta",
                 method = RequestMethod.POST)
-    public void createSecretSantaRound(@RequestBody SecretSantaRoundRequest entry) {
-        secretSantaService.startRound(entry);
+    public SecretSantaRoundResponse createSecretSantaRound(@RequestBody SecretSantaRoundRequest entry) {
+        return secretSantaService.startRound(entry);
     }
 
 }
