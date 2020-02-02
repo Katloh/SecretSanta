@@ -1,15 +1,19 @@
 package com.kaloh.secretsanta;
 
+import org.hamcrest.Matchers.*;
 import com.kaloh.secretsanta.domain.Pairing;
 import com.kaloh.secretsanta.dto.ParticipantDto;
 import com.kaloh.secretsanta.dto.SecretSantaRoundRequest;
 import com.kaloh.secretsanta.dto.SecretSantaRoundResponse;
 import com.kaloh.secretsanta.eMail.TestMailService;
+import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import lombok.EqualsAndHashCode;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -23,7 +27,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
+import static io.restassured.module.mockmvc.RestAssuredMockMvc.*;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.times;
@@ -54,6 +59,11 @@ public class SecretSantaRestIntegrationTest {
 
         participants.add(participantOne);
         participants.add(participantTwo);
+    }
+
+    @AfterEach
+    public void resetMockMvc() {
+        RestAssured.reset();
     }
 
     @Captor
@@ -108,20 +118,19 @@ public class SecretSantaRestIntegrationTest {
     @Test
     public void posting_two_participants_will_return_number_of_sent_eMails() throws UnsupportedEncodingException {
 
-        SecretSantaRoundRequest secretSantaRoundRequest = new SecretSantaRoundRequest("2020",participants);
+        SecretSantaRoundRequest secretSantaRoundRequest = new SecretSantaRoundRequest("2020", participants);
 
-        SecretSantaRoundResponse response = given()
+        given()
                 .contentType("application/json")
                 .body(secretSantaRoundRequest)
                 .when()
                 .post("/secretSanta", secretSantaRoundRequest)
                 .then()
-                .contentType(ContentType.JSON).extract().body().as(SecretSantaRoundResponse.class);
+                .body("numberOfSentEMails", equalTo(2));
 
-        assertEquals(2, response.getNumberOfSentEMails());
     }
 
-    private boolean isDonorInList(String string, List<Pairing> pairings){
+    private boolean isDonorInList(String string, List<Pairing> pairings) {
         boolean match = false;
         return match = pairings.stream().filter(pairing -> pairing.getDonor().getName().equals(string)).count() == 1;
     }

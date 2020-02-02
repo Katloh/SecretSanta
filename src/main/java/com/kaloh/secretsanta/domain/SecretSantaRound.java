@@ -26,8 +26,8 @@ public class SecretSantaRound {
         this.mailService = new TestMailService();
     }
 
-    public void runSecretSantaRound(List<Participant> participants) {
-
+    public Result runSecretSantaRound(List<Participant> participants) {
+        int numberOfSentEMails = 0;
         ArrayList<Pairing> oldPairings = new ArrayList<>();
 
         participants.forEach(participant -> {
@@ -38,10 +38,14 @@ public class SecretSantaRound {
             }
         });
         shuffle();
-        do{
+        do {
             createPairings();
-        } while(haveNewPairingsMatchedOldPairings(listOfPairings, oldPairings));
-        sendMailToDonors(listOfPairings);
+        } while (haveNewPairingsMatchedOldPairings(listOfPairings, oldPairings));
+        numberOfSentEMails = sendMailToDonors(listOfPairings);
+
+        Result result = new Result();
+        result.setNumberOfSentEMails(numberOfSentEMails);
+        return result;
     }
 
     public ArrayList<Participant> getListOfParticipants() {
@@ -51,13 +55,13 @@ public class SecretSantaRound {
     public void addParticipantToSecretSantaRound(Participant newParticipant) throws DuplicateParticipantException {
 
         boolean noMatch = listOfParticipants
-                    .stream()
-                    .filter(participant ->
-                            participant.getName().equals(newParticipant.getName()) &&
-                                    participant.getEmailAdress().equals(newParticipant.getEmailAdress()))
-                    .count() == 0;
+                .stream()
+                .filter(participant ->
+                        participant.getName().equals(newParticipant.getName()) &&
+                                participant.getEmailAdress().equals(newParticipant.getEmailAdress()))
+                .count() == 0;
 
-        if(noMatch == true) {
+        if (noMatch == true) {
             listOfParticipants.add(newParticipant);
         } else {
             throw new DuplicateParticipantException("Der Teilnehmer " + newParticipant.getName() + "steht mehrmals in der List");
@@ -107,11 +111,15 @@ public class SecretSantaRound {
         return false;
     }
 
-    private void sendMailToDonors(List<Pairing> pairings) {
+    private int sendMailToDonors(List<Pairing> pairings) {
 
-        pairings.forEach(pairing -> {
+        int numberOfSentEMails = 0;
+
+        for (Pairing pairing : pairings) {
             mailService.sendMail(pairing, year);
-        });
+            numberOfSentEMails++;
+        }
+        return numberOfSentEMails;
     }
 
 }

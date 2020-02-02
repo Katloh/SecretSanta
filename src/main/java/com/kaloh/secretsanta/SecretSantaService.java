@@ -1,6 +1,7 @@
 package com.kaloh.secretsanta;
 
 import com.kaloh.secretsanta.domain.Participant;
+import com.kaloh.secretsanta.domain.Result;
 import com.kaloh.secretsanta.domain.SecretSantaRound;
 import com.kaloh.secretsanta.dto.SecretSantaRoundRequest;
 import com.kaloh.secretsanta.dto.SecretSantaRoundResponse;
@@ -24,16 +25,16 @@ public class SecretSantaService {
 
     }
 
-    public SecretSantaRoundResponse startRound(SecretSantaRoundRequest request) {
+    public Result startRound(SecretSantaRoundRequest request) {
 
         SecretSantaRound secretSantaRound = new SecretSantaRound(request.getYear(), testMailService);
 
         List<Participant> participantList = request.getParticipants().stream().map(Participant::new).collect(Collectors.toList());
 
-        secretSantaRound.runSecretSantaRound(participantList);
+        Result result = secretSantaRound.runSecretSantaRound(participantList);
 
         ArrayList<String> donorNames = new ArrayList<>();
 
-        return new SecretSantaRoundResponse(testMailService.getNumberOfSentEMails());
+        return result;
     }
 }
