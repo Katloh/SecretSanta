@@ -41,18 +41,6 @@ public class SecretSantaRoundTest {
     }
 
     @Test
-    public void Participants_Of_One_SecretSantaRound_CanBeShuffled() throws DuplicateParticipantException {
-        SecretSantaRound secretSantaRound = new SecretSantaRound();
-        Participant one = new Participant("Steve", "@steve");
-        Participant two = new Participant("Karl", "@Karl");
-        secretSantaRound.addParticipantToSecretSantaRound(two);
-        secretSantaRound.addParticipantToSecretSantaRound(one);
-
-        assertEquals(secretSantaRound, secretSantaRound);
-        assertNotEquals(secretSantaRound, secretSantaRound.shuffle());
-    }
-
-    @Test
     public void Participants_Can_Be_Paired_And_The_Pairing_Can_Be_Added_To_A_PairingList() throws DuplicateParticipantException {
         SecretSantaRound secretSantaRound = new SecretSantaRound();
         Participant one = new Participant("Steve", "@steve");
