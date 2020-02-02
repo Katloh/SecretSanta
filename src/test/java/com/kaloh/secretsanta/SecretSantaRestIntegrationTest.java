@@ -79,8 +79,8 @@ public class SecretSantaRestIntegrationTest {
                 .contentType("application/json")
                 .body(secretSantaRoundRequest)
                 .when()
-                .post("/secretSanta", secretSantaRoundRequest)
-                .then().assertThat().statusCode(200);
+                .post("/secretSanta", secretSantaRoundRequest);
+
 
         verify(testMailService, times(2)).sendMail(pairingCaptor.capture(), anyString());
         List<Pairing> capturedPairings = pairingCaptor.getAllValues();
