@@ -114,6 +114,6 @@ public class SecretSantaRestIntegrationTest {
 
     private boolean isDonorInList(String string, List<Pairing> pairings){
         boolean match = false;
-        return match = pairings.stream().filter(argument -> argument.getDonor().getName().equals(string)).count() == 1;
+        return match = pairings.stream().filter(pairing -> pairing.getDonor().getName().equals(string)).count() == 1;
     }
 }
