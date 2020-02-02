@@ -65,11 +65,11 @@ public class SecretSantaRound {
     }
 
 
-    public boolean givenParticipantIsPartOfTheSecretSantaRound(Participant one) {
+    public boolean hasParticipant(Participant p) {
         return listOfParticipants
                 .stream()
-                .filter(Participant -> Participant.getName().equals(one.getName()) &&
-                        Participant.getEmailAdress().equals(one.getEmailAdress())).count() == 1;
+                .filter(existingParticipant -> existingParticipant.getName().equals(p.getName()) &&
+                        existingParticipant.getEmailAdress().equals(p.getEmailAdress())).count() == 1;
     }
 
     public ArrayList<Participant> shuffle() {

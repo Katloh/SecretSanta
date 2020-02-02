@@ -35,13 +35,13 @@ public class SecretSantaRoundTest {
         secretSantaRound.addParticipantToSecretSantaRound(two);
         secretSantaRound.addParticipantToSecretSantaRound(one);
 
-        assertTrue(secretSantaRound.givenParticipantIsPartOfTheSecretSantaRound(two));
-        assertTrue(secretSantaRound.givenParticipantIsPartOfTheSecretSantaRound(one));
-        assertFalse(secretSantaRound.givenParticipantIsPartOfTheSecretSantaRound(three));
+        assertTrue(secretSantaRound.hasParticipant(two));
+        assertTrue(secretSantaRound.hasParticipant(one));
+        assertFalse(secretSantaRound.hasParticipant(three));
     }
 
     @Test
-    public void Participants_Can_Be_Paired_And_The_Pairing_Can_Be_Added_To_A_PairingList() throws DuplicateParticipantException {
+    public void all_Participants_can_be_paired() throws DuplicateParticipantException {
         SecretSantaRound secretSantaRound = new SecretSantaRound();
         Participant one = new Participant("Steve", "@steve");
         Participant two = new Participant("Karl", "@Karl");
@@ -59,7 +59,6 @@ public class SecretSantaRoundTest {
         assertNotEquals(listOfNewPairings.get(0).getDonor(), "Karl");
         assertNotEquals(listOfNewPairings.get(1).getDonor(), "Steve");
     }
-
 
     @Test
     public void For_Each_Pairing_Donor_And_Giftee_are_not_the_same_Participant() throws DuplicateParticipantException {
