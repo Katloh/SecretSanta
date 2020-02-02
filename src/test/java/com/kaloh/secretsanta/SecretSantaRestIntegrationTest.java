@@ -83,18 +83,18 @@ public class SecretSantaRestIntegrationTest {
     }
 
     @Captor
-    private ArgumentCaptor<Pairing> captor = ArgumentCaptor.forClass(Pairing.class);
+    private ArgumentCaptor<Pairing> pairingCaptor = ArgumentCaptor.forClass(Pairing.class);
 
     @Test
     public void posting_the_correct_Roundrequest_will_send_out_two_eMails_to_two_given_Donors() {
 
         ArrayList<ParticipantDto> participants = new ArrayList<>();
 
-        ParticipantDto participantone = new ParticipantDto("katja", "@foo");
-        ParticipantDto participantwo = new ParticipantDto("gergor", "@frefor");
+        ParticipantDto participantOne = new ParticipantDto("katja", "@foo");
+        ParticipantDto participantTwo = new ParticipantDto("gergor", "@frefor");
 
-        participants.add(participantone);
-        participants.add(participantwo);
+        participants.add(participantOne);
+        participants.add(participantTwo);
 
         SecretSantaRoundRequest secretSantaRoundRequest = new SecretSantaRoundRequest("2020", participants);
 
@@ -105,15 +105,15 @@ public class SecretSantaRestIntegrationTest {
                 .post("/secretSanta", secretSantaRoundRequest)
                 .then().assertThat().statusCode(200);
 
-        verify(testMailService, times(2)).sendMail(captor.capture(), anyString());
-        List<Pairing> capturedArgument = captor.getAllValues();
+        verify(testMailService, times(2)).sendMail(pairingCaptor.capture(), anyString());
+        List<Pairing> capturedPairings = pairingCaptor.getAllValues();
 
-        assertTrue((match(capturedArgument,"gergor")));
-        assertTrue((match(capturedArgument,"katja")));
+        assertTrue((isDoneeInList("gergor", capturedPairings)));
+        assertTrue((isDoneeInList("katja", capturedPairings)));
     }
 
-    private boolean match (List<Pairing> capturedArgument, String string){
+    private boolean isDoneeInList(String string, List<Pairing> pairings){
         boolean match = false;
-        return match = capturedArgument.stream().filter(argument -> argument.getDonee().getName().equals(string)).count() == 1;
+        return match = pairings.stream().filter(argument -> argument.getDonee().getName().equals(string)).count() == 1;
     }
 }
