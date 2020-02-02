@@ -42,6 +42,9 @@ public class SecretSantaRestIntegrationTest {
         RestAssuredMockMvc.webAppContextSetup(webApplicationContext);
     }
 
+    @Captor
+    private ArgumentCaptor<Pairing> pairingCaptor = ArgumentCaptor.forClass(Pairing.class);
+
     @Test
     public void status_is_200_for_a_successful_post() {
 
@@ -60,33 +63,7 @@ public class SecretSantaRestIntegrationTest {
     }
 
     @Test
-    public void posting_the_correct_Roundrequest_will_send_out_two_eMails() {
-
-        ArrayList<ParticipantDto> participants = new ArrayList<>();
-
-        ParticipantDto participantone = new ParticipantDto("katja", "@foo");
-        ParticipantDto participantwo = new ParticipantDto("gergor", "@frefor");
-
-        participants.add(participantone);
-        participants.add(participantwo);
-
-        SecretSantaRoundRequest secretSantaRoundRequest = new SecretSantaRoundRequest("2020", participants);
-
-        given()
-                .contentType("application/json")
-                .body(secretSantaRoundRequest)
-                .when()
-                .post("/secretSanta", secretSantaRoundRequest)
-                .then().assertThat().statusCode(200);
-
-        verify(testMailService, times(2)).sendMail(any(Pairing.class),anyString());
-    }
-
-    @Captor
-    private ArgumentCaptor<Pairing> pairingCaptor = ArgumentCaptor.forClass(Pairing.class);
-
-    @Test
-    public void posting_the_correct_Roundrequest_will_send_out_two_eMails_to_two_given_Donors() {
+    public void posting_minimum_two_participnts_will_send_out_two_eMails_to_two_given_Donors() {
 
         ArrayList<ParticipantDto> participants = new ArrayList<>();
 
@@ -116,4 +93,6 @@ public class SecretSantaRestIntegrationTest {
         boolean match = false;
         return match = pairings.stream().filter(pairing -> pairing.getDonor().getName().equals(string)).count() == 1;
     }
+
+
 }
