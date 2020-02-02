@@ -9,7 +9,7 @@ public class SecretSantaRoundLogger {
     public void documentSecretSantaRound(ArrayList<Pairing> secretSantaRound, String year, BufferedWriter bufferedWriter) {
 
         String pairinglog = secretSantaRound.stream()
-                .map(pairing -> pairing.getDonee().hashCode() + " : " + pairing.getGiftee().hashCode() + "\n")
+                .map(pairing -> pairing.getDonor().hashCode() + " : " + pairing.getGiftee().hashCode() + "\n")
                 .reduce("", this::reduceToString);
         try {
             bufferedWriter.write(pairinglog);

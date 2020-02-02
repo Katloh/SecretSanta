@@ -29,6 +29,6 @@ public class SecretSantaRoundLoggerTest {
         secretSantaRoundLogger.documentSecretSantaRound(testPairings, "2019", mock);
 
         //then
-        verify(mock).write(testPairings.get(0).getDonee().hashCode()+" : "+testPairings.get(0).getGiftee().hashCode()+ "\n");
+        verify(mock).write(testPairings.get(0).getDonor().hashCode()+" : "+testPairings.get(0).getGiftee().hashCode()+ "\n");
     }
 }

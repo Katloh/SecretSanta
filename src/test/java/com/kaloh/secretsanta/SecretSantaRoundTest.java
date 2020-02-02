@@ -63,13 +63,13 @@ public class SecretSantaRoundTest {
 
         ArrayList<Pairing> listOfNewPairings = secretSantaRound.createPairings();
 
-        assertEquals(listOfNewPairings.get(0).getDonee().getName(), "Steve");
-        assertEquals(listOfNewPairings.get(1).getDonee().getName(), "Karl");
+        assertEquals(listOfNewPairings.get(0).getDonor().getName(), "Steve");
+        assertEquals(listOfNewPairings.get(1).getDonor().getName(), "Karl");
         assertEquals(listOfNewPairings.get(0).getGiftee().getName(), "Karl");
         assertEquals(listOfNewPairings.get(1).getGiftee().getName(), "Steve");
 
-        assertNotEquals(listOfNewPairings.get(0).getDonee(), "Karl");
-        assertNotEquals(listOfNewPairings.get(1).getDonee(), "Steve");
+        assertNotEquals(listOfNewPairings.get(0).getDonor(), "Karl");
+        assertNotEquals(listOfNewPairings.get(1).getDonor(), "Steve");
     }
 
 
@@ -84,10 +84,10 @@ public class SecretSantaRoundTest {
 
         ArrayList<Pairing> listOfNewPairings = secretSantaRound.createPairings();
 
-        assertEquals(listOfNewPairings.get(0).getDonee(), listOfNewPairings.get(1).getGiftee());
-        assertEquals(listOfNewPairings.get(1).getDonee(), listOfNewPairings.get(0).getGiftee());
-        assertNotEquals(listOfNewPairings.get(0).getDonee(), listOfNewPairings.get(0).getGiftee());
-        assertNotEquals(listOfNewPairings.get(1).getDonee(), listOfNewPairings.get(1).getGiftee());
+        assertEquals(listOfNewPairings.get(0).getDonor(), listOfNewPairings.get(1).getGiftee());
+        assertEquals(listOfNewPairings.get(1).getDonor(), listOfNewPairings.get(0).getGiftee());
+        assertNotEquals(listOfNewPairings.get(0).getDonor(), listOfNewPairings.get(0).getGiftee());
+        assertNotEquals(listOfNewPairings.get(1).getDonor(), listOfNewPairings.get(1).getGiftee());
     }
 
     @Test

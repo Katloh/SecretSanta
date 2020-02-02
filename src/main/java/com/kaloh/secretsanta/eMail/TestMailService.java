@@ -19,7 +19,7 @@ public class TestMailService {
     }
 
     public EMail createNewEMail(Pairing pairing, String year) {
-        EMail eMail = new EMail(pairing.getDonee().getEmailAdress(), pairing.getDonee().getName(), pairing.getGiftee().getName(), year);
+        EMail eMail = new EMail(pairing.getDonor().getEmailAdress(), pairing.getDonor().getName(), pairing.getGiftee().getName(), year);
         sentEMails.add(eMail);
         return eMail;
     }

@@ -108,12 +108,12 @@ public class SecretSantaRestIntegrationTest {
         verify(testMailService, times(2)).sendMail(pairingCaptor.capture(), anyString());
         List<Pairing> capturedPairings = pairingCaptor.getAllValues();
 
-        assertTrue((isDoneeInList("gergor", capturedPairings)));
-        assertTrue((isDoneeInList("katja", capturedPairings)));
+        assertTrue((isDonorInList("gergor", capturedPairings)));
+        assertTrue((isDonorInList("katja", capturedPairings)));
     }
 
-    private boolean isDoneeInList(String string, List<Pairing> pairings){
+    private boolean isDonorInList(String string, List<Pairing> pairings){
         boolean match = false;
-        return match = pairings.stream().filter(argument -> argument.getDonee().getName().equals(string)).count() == 1;
+        return match = pairings.stream().filter(argument -> argument.getDonor().getName().equals(string)).count() == 1;
     }
 }

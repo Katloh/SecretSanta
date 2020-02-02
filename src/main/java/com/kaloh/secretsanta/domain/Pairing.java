@@ -5,20 +5,20 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode
 public class Pairing {
 
-    private Participant donee;
+    private Participant donor;
     private Participant giftee;
 
-    public Pairing(Participant donee, Participant giftee) {
-        this.donee = donee;
+    public Pairing(Participant donor, Participant giftee) {
+        this.donor = donor;
         this.giftee = giftee;
     }
 
-    public Participant getDonee() {
-        return donee;
+    public Participant getDonor() {
+        return donor;
     }
 
-    public void setDonee(Participant donee) {
-        this.donee = donee;
+    public void setDonor(Participant donor) {
+        this.donor = donor;
     }
 
     public Participant getGiftee() {
