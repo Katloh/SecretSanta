@@ -107,7 +107,7 @@ public class SecretSantaRound {
         return false;
     }
 
-    public void sendMailToDonors(List<Pairing> pairings) {
+    private void sendMailToDonors(List<Pairing> pairings) {
 
         pairings.forEach(pairing -> {
             mailService.sendMail(pairing, year);

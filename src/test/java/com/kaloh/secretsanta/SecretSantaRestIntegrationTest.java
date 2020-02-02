@@ -47,7 +47,7 @@ public class SecretSantaRestIntegrationTest {
 
     @Test
     public void status_is_200_for_a_successful_post() {
-
+        //given a SecretSantaRoundRequest
         ArrayList<ParticipantDto> participants = new ArrayList<>();
         participants.add(new ParticipantDto("katja", "@foo"));
         participants.add(new ParticipantDto("gergor", "@frefor"));
@@ -64,7 +64,7 @@ public class SecretSantaRestIntegrationTest {
 
     @Test
     public void posting_minimum_two_participnts_will_send_out_two_eMails_to_two_given_Donors() {
-
+        //given a SecretSantaRoundRequest and a Testmailservice
         ArrayList<ParticipantDto> participants = new ArrayList<>();
 
         ParticipantDto participantOne = new ParticipantDto("katja", "@foo");
@@ -93,6 +93,4 @@ public class SecretSantaRestIntegrationTest {
         boolean match = false;
         return match = pairings.stream().filter(pairing -> pairing.getDonor().getName().equals(string)).count() == 1;
     }
-
-
 }

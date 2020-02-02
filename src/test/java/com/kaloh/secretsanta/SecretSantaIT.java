@@ -10,13 +10,14 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class SecretSantaIT {
 
     @Test
     public void a_SecretSantaRound_can_be_created_with_given_Year() {
-
+        //given a Testmailservice and a SecretSantaRound
         TestMailService testMailService = new TestMailService();
         List<Pairing> pairings = new ArrayList<>();
         pairings.add(new Pairing(
@@ -29,6 +30,7 @@ public class SecretSantaIT {
 
     @Test(expected = DuplicateParticipantException.class)
     public void throws_exception_if_participant_is_added_twice() throws Exception {
+        //given a Testmailservice and a SecretSantaRound
         TestMailService testMailService = new TestMailService();
         SecretSantaRound secretSantaRound = new SecretSantaRound("2020", testMailService);
 
@@ -38,8 +40,8 @@ public class SecretSantaIT {
 
     @Test
     public void a_SecretSantaRound_can_be_run(){
+        //given a Testmailservice and a SecretSantaRound
         TestMailService testMailService = new TestMailService();
-
         ArrayList<Participant> participants = new ArrayList<>();
 
         Participant participantOne = new Participant("Karl","@karl");
@@ -50,14 +52,8 @@ public class SecretSantaIT {
         participants.add(participantTwo);
         participants.add(participantThree);
 
-        ArrayList<Pairing> oldPairings = new ArrayList<>();
-        oldPairings.add(new Pairing(participantOne, participantTwo));
-        oldPairings.add(new Pairing(participantTwo, participantThree));
-        oldPairings.add(new Pairing(participantThree, participantOne));
-
         SecretSantaRound secretSantaRound = new SecretSantaRound("2020", testMailService);
         secretSantaRound.runSecretSantaRound(participants);
         assertTrue(testMailService.getSentEmails().size() == 3);
     }
-
 }

@@ -78,7 +78,7 @@ public class SecretSantaRoundTest {
     }
 
     @Test
-    public void the_result_of_New_Pairing_does_not_equals_the_result_of_the_previous_Pairing() {
+    public void the_result_of_New_Pairings_does_not_equals_the_result_of_the_previous_Pairings() {
         SecretSantaRound secretSantaRound = new SecretSantaRound();
 
         Participant participantOne = new Participant("Steve", "foo@bar.com");
@@ -118,19 +118,5 @@ public class SecretSantaRoundTest {
 
         assertFalse(secretSantaRound
                 .haveNewPairingsMatchedOldPairings(newSecretSantaRound, previousSecretSantaRound));
-    }
-
-    @Test
-    public void SecretSantaRound_can_be_configured_with_a_mailservice() {
-        TestMailService testMailService = new TestMailService();
-        SecretSantaRound secretSantaRound = new SecretSantaRound("2020", testMailService);
-
-        List<Pairing> pairings = new ArrayList<>();
-        pairings.add(new Pairing(
-                new Participant("Steve", "@steve"), new Participant("Karl", "@steve")));
-
-        secretSantaRound.sendMailToDonors(pairings);
-        assertEquals(testMailService.getNumberOfSentEMails(), 1);
-
     }
 }
