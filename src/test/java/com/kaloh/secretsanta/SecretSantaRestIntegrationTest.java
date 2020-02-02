@@ -11,6 +11,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
+import org.mockito.Matchers;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
@@ -49,8 +51,7 @@ public class SecretSantaRestIntegrationTest {
     private ArgumentCaptor<String> yearCaptor = ArgumentCaptor.forClass(String.class);
 
     @Test
-    public void status_is_200_for_a_successful_post() {
-        //given a SecretSantaRoundRequest
+    public void status_is_200_for_a_post_with_two_participants() {
         ArrayList<ParticipantDto> participants = new ArrayList<>();
         participants.add(new ParticipantDto("katja", "@foo"));
         participants.add(new ParticipantDto("gergor", "@frefor"));
@@ -66,8 +67,7 @@ public class SecretSantaRestIntegrationTest {
     }
 
     @Test
-    public void posting_minimum_two_participnts_will_send_out_two_eMails_to_two_given_Donors() {
-        //given a SecretSantaRoundRequest and a Testmailservice
+    public void posting_two_participants_will_send_out_two_eMails_to_both_donors() {
         ArrayList<ParticipantDto> participants = new ArrayList<>();
 
         ParticipantDto participantOne = new ParticipantDto("katja", "@foo");
@@ -85,12 +85,34 @@ public class SecretSantaRestIntegrationTest {
                 .post("/secretSanta", secretSantaRoundRequest);
 
 
-        verify(testMailService, times(2)).sendMail(pairingCaptor.capture(), yearCaptor.capture());
+        verify(testMailService, times(2)).sendMail(pairingCaptor.capture(), anyString());
         List<Pairing> capturedPairings = pairingCaptor.getAllValues();
-        List<String> capturedYears = yearCaptor.getAllValues();
 
         assertTrue(isDonorInList("gergor", capturedPairings));
         assertTrue(isDonorInList("katja", capturedPairings));
+    }
+
+    @Test
+    public void posting_a_year_will_create_eMails_with_correct_year_in_the_subject() {
+        ArrayList<ParticipantDto> participants = new ArrayList<>();
+
+        ParticipantDto participantOne = new ParticipantDto("katja", "@foo");
+        ParticipantDto participantTwo = new ParticipantDto("gergor", "@frefor");
+
+        participants.add(participantOne);
+        participants.add(participantTwo);
+
+        SecretSantaRoundRequest secretSantaRoundRequest = new SecretSantaRoundRequest("2020", participants);
+
+        given()
+                .contentType("application/json")
+                .body(secretSantaRoundRequest)
+                .when()
+                .post("/secretSanta", secretSantaRoundRequest);
+
+
+        verify(testMailService, times(2)).sendMail(any(), yearCaptor.capture());
+        List<String> capturedYears = yearCaptor.getAllValues();
 
         assertTrue(capturedYears.stream().allMatch(year -> year.equals("2020")));
     }
